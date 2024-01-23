@@ -1,7 +1,6 @@
 FROM steamcmd/steamcmd AS build
 
 RUN steamcmd +login anonymous +app_update 2394010 validate +quit
-# RUN steamcmd +login anonymous +app_update 1007    validate +quit
 
 RUN rm /root/Steam/steamapps/common/PalServer/Pal/Binaries/Linux/PalServer-Linux-Test.debug
 RUN rm /root/Steam/steamapps/common/PalServer/Pal/Binaries/Linux/PalServer-Linux-Test.sym
@@ -18,13 +17,9 @@ FROM ubuntu:20.04
 RUN groupadd --gid 5000 palworld && \
     useradd --home-dir /home/palworld --create-home --uid 5000 --gid 5000 palworld
 
-#RUN addgroup -g 5000 palworld && \
-#    adduser -u 5000 -D -G palworld palworld
-
 USER palworld
 
 COPY --from=build /root/Steam/steamapps/common/PalServer /PalServer
-COPY --from=build /root/.steam /home/palworld/.steam
 COPY --from=build /root/.local/share/Steam/steamcmd /home/palworld/.local/share/Steam/steamcmd
 
 RUN mkdir -p /home/palworld/.steam && \
