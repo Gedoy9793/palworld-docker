@@ -1,12 +1,13 @@
 FROM steamcmd/steamcmd
 
-RUN steamcmd +force_install_dir /home/palworld/runtime   +login anonymous +app_update 1007    validate +quit
-RUN steamcmd +force_install_dir /home/palworld/palserver +login anonymous +app_update 2394010 validate +quit
-
 RUN groupadd --gid 5000 palworld && \
     useradd --home-dir /home/palworld --create-home --uid 5000 --gid 5000 --shell /bin/sh --skel /dev/null palworld
 
-RUN ln /home/palworld/palserver/Pal/Saved /Saved && \
+RUN steamcmd +force_install_dir /home/palworld/runtime   +login anonymous +app_update 1007    validate +quit
+RUN steamcmd +force_install_dir /home/palworld/palserver +login anonymous +app_update 2394010 validate +quit
+
+RUN mkdir -p /home/palworld/palserver/Pal/Saved && \
+    ln /home/palworld/palserver/Pal/Saved /Saved && \
     mkdir -p /home/palworld/.steam/sdk64 && \
     mkdir -p /home/palworld/.steam/sdk32 && \
     ln -s /home/palworld/runtime/linux64/steamclient.so /home/palworld/.steam/sdk64/ && \
