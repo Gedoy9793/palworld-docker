@@ -9,8 +9,14 @@ RUN rm /root/Steam/steamapps/common/PalServer/Engine/Binaries/Linux/CrashReportC
 
 RUN groupadd --gid 5000 palworld && \
     useradd --uid 5000 --gid 5000 palworld
+
 RUN chown -R 5000:5000 /root/Steam/steamapps/common/PalServer
-RUN chown -R 5000:5000 /root/.local/share/Steam/steamcmd
+
+RUN mkdir -p /root/steam/sdk32 && \
+    mkdir -p /root/steam/sdk64 && \
+    cp /root/.local/share/Steam/steamcmd/linux32/steamclient.so /root/steam/sdk32/ && \
+    cp /root/.local/share/Steam/steamcmd/linux64/steamclient.so /root/steam/sdk64/ && \
+    chown -R 5000:5000 /root/steam
 
 FROM ubuntu:20.04
 
@@ -20,11 +26,7 @@ RUN groupadd --gid 5000 palworld && \
 USER palworld
 
 COPY --from=build /root/Steam/steamapps/common/PalServer /PalServer
-COPY --from=build /root/.local/share/Steam/steamcmd /home/palworld/.local/share/Steam/steamcmd
-
-RUN mkdir -p /home/palworld/.steam && \
-    ln -s /home/palworld/.local/share/Steam/steamcmd/linux32 /home/palworld/.steam/sdk32 && \
-    ln -s /home/palworld/.local/share/Steam/steamcmd/linux64 /home/palworld/.steam/sdk64
+COPY --from=build /root/steam /home/palworld/.steam
 
 EXPOSE 8211/udp
 
