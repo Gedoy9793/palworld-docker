@@ -10,7 +10,7 @@ $ docker pull registry.cn-hangzhou.aliyuncs.com/gedoy-public/palworld
 
 启动：
 ```shell
-$ docker run -itd -p <映射端口号>:2811/udp \
+$ docker run -itd -p <映射端口号>:8211/udp \
      -v <存档目录映射路径>:/PalServer/Pal/Saved \
      registry.cn-hangzhou.aliyuncs.com/gedoy-public/palworld
 ```
