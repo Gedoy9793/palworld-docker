@@ -10,7 +10,9 @@ $ docker pull registry.cn-hangzhou.aliyuncs.com/gedoy-public/palworld
 
 启动：
 ```shell
-$ docker run -itd -p <映射端口号>:2811/udp -v <存档目录映射路径>:/PalServer/Pal/Saved registry.cn-hangzhou.aliyuncs.com/gedoy-public/palworld
+$ docker run -itd -p <映射端口号>:2811/udp \
+     -v <存档目录映射路径>:/PalServer/Pal/Saved \
+     registry.cn-hangzhou.aliyuncs.com/gedoy-public/palworld
 ```
 
 启动时，脚本会给存档目录赋777权限。
