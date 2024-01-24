@@ -9,9 +9,13 @@ RUN rm /root/Steam/steamapps/common/PalServer/Manifest*
 RUN groupadd --gid 5000 palworld && \
     useradd --uid 5000 --gid 5000 palworld
 
-RUN echo "#!/bin/bash" > /root/Steam/steamapps/common/PalServer/run.sh && \
-    echo "chmod -R 777 /PalServer/Pal/Saved" >> /root/Steam/steamapps/common/PalServer/run.sh && \
-    echo "su palworld -c /PalServer/PalServer.sh $@" >> /root/Steam/steamapps/common/PalServer/run.sh && \
+RUN echo "#!/bin/bash                                          " > /root/Steam/steamapps/common/PalServer/run.sh && \
+    echo "chmod -R 777 /PalServer/Pal/Saved                    " >> /root/Steam/steamapps/common/PalServer/run.sh && \
+    echo "args=\"\"                                            " >> /root/Steam/steamapps/common/PalServer/run.sh && \
+    echo "for arg in \"\$@\"; do                               " >> /root/Steam/steamapps/common/PalServer/run.sh && \
+    echo "    args=\"\$args \$arg\"                            " >> /root/Steam/steamapps/common/PalServer/run.sh && \
+    echo "done                                                 " >> /root/Steam/steamapps/common/PalServer/run.sh && \
+    echo "su palworld -c \"/PalServer/PalServer.sh \$args\"    " >> /root/Steam/steamapps/common/PalServer/run.sh && \
     chmod +x /root/Steam/steamapps/common/PalServer/run.sh
 
 RUN chown -R 5000:5000 /root/Steam/steamapps/common/PalServer
