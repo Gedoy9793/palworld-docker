@@ -2,8 +2,6 @@ FROM steamcmd/steamcmd AS build
 
 RUN steamcmd +login anonymous +app_update 2394010 validate +quit
 
-RUN rm /root/Steam/steamapps/common/PalServer/Pal/Binaries/Linux/PalServer-Linux-Test.debug
-RUN rm /root/Steam/steamapps/common/PalServer/Engine/Binaries/Linux/CrashReportClient.debug
 RUN rm /root/Steam/steamapps/common/PalServer/Manifest*
 
 RUN groupadd --gid 5000 palworld && \
